@@ -15,11 +15,7 @@ This repository contains two independent applications:
 - The live broadcast area is prepared but needs the organiser's official streaming URL before it can play a live event.
 
 ## Publish the festival website
-The repository owner is digiprodngmarketing-a11y. To publish this project site from this repository, open Settings → Pages and choose:
-- Source: Deploy from a branch
-- Branch: main
-- Folder: /docs
-- Save
+The repository owner is digiprodngmarketing-a11y. First-time activation: open Settings → Pages and set Build and deployment → Source to GitHub Actions. Save. The committed workflow at .github/workflows/pages.yml will then publish docs/ automatically on future website commits.
 
 The normal project URL for this repository will be:
 https://digiprodngmarketing-a11y.github.io/amalaandpalmwinefestival/
