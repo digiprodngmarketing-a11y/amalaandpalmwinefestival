@@ -1,0 +1,41 @@
+name: Validate Waves Stem Lab
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "stem-lab/**"
+      - ".github/workflows/stem-lab-check.yml"
+  pull_request:
+    paths:
+      - "stem-lab/**"
+
+permissions:
+  contents: read
+
+jobs:
+  syntax-and-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check Python syntax
+        run: python -m compileall -q stem-lab
+      - name: Check web interface and API route definitions
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          class CheckHTML(HTMLParser):
+              pass
+          page = Path("stem-lab/web/index.html").read_text(encoding="utf-8")
+          CheckHTML().feed(page)
+          source = Path("stem-lab/main.py").read_text(encoding="utf-8")
+          required = ["/api/health", "/api/separate", "/api/jobs/{job_id}", "/api/jobs/{job_id}/download"]
+          missing = [route for route in required if route not in source]
+          if missing:
+              raise SystemExit(f"Missing API routes: {missing}")
+          print("Stem Lab Python syntax, HTML parsing and API route checks passed.")
+          PY
