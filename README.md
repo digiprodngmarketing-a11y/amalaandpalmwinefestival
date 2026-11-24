@@ -6,18 +6,27 @@ This repository contains two independent applications:
 2. Waves Stem Lab, a separate audio-analysis and Demucs stem-separation service.
 
 ## Festival website
-- Main page: index.html
+- Main deployable site: docs/index.html
+- Editable source copy: index.html
 - Responsive festival marketing design and top-of-page vendor-category carousel.
-- Sections for the event story, food and culture, vendor participation, event details and an online live-stream area.
-- Public event listing information used in the first draft: Sunday, 13 December 2026, 12 noon, The Stable, 41 Bode Thomas Street, Surulere, Lagos. Confirm all event details with the organiser before publishing final ticketing or travel information.
-- Individual vendor profiles and live broadcast player remain ready for official names, photography and stream URL.
+- Sections for the event story, food and culture, vendor participation, event details and online live-stream area.
+- Public event listing information used in this draft: Sunday, 13 December 2026, 12 noon, The Stable, 41 Bode Thomas Street, Surulere, Lagos. Confirm all event details with the organiser before publishing final ticketing or travel information.
+- Vendor cards are illustrative food categories, not confirmed individual vendor identities. Add approved vendor names, menus and photographs when supplied.
+- The live broadcast area is prepared but needs the organiser's official streaming URL before it can play a live event.
+
+## Publish the festival website
+The repository owner is digiprodngmarketing-a11y. To publish this project site from this repository, open Settings → Pages and choose:
+- Source: Deploy from a branch
+- Branch: main
+- Folder: /docs
+- Save
+
+The normal project URL for this repository will be:
+https://digiprodngmarketing-a11y.github.io/amalaandpalmwinefestival/
+
+The exact requested address https://amalaandpalmwinefestival.github.io is a GitHub user/organisation site address. GitHub requires the repository to be named amalaandpalmwinefestival.github.io and owned by a GitHub user or organisation whose account name is amalaandpalmwinefestival. The current connected owner is digiprodngmarketing-a11y, so it cannot publish to that exact hostname. See GitHub's official Pages documentation.
 
 ## Waves Stem Lab
 See stem-lab/README.md for installation, API routes and deployment. The backend uses Demucs htdemucs for vocals, drums, bass and other stems, accepts batches of up to 30 files and packages results as ZIP archives. It is independent of the festival site.
 
-GitHub Pages cannot run the Python audio processor. The stem-lab backend must be deployed separately to a Python-capable server with persistent storage and adequate compute.
-
-## Website deployment
-The GitHub Actions workflow in .github/workflows/pages.yml deploys only the static root landing page when index.html changes. GitHub Pages must be enabled for this repository with GitHub Actions as the publishing source.
-
-Important URL note: this repository is owned by the GitHub account digiprodngmarketing-a11y, so its default project-site URL follows that owner's domain and includes the repository path. The exact address amalaandpalmwinefestival.github.io requires a GitHub user or organization named amalaandpalmwinefestival and a repository named amalaandpalmwinefestival.github.io (or a custom domain configured and owned by the project). See GitHub's official Pages documentation.
+GitHub Pages only hosts static files; it cannot run Python, Demucs, PyTorch or process uploaded audio. Deploy the stem-lab backend separately to a Python-capable host with persistent storage and adequate compute. The backend code is committed but not yet deployed as a public processing service.
