@@ -23,11 +23,11 @@ def analyse(path:Path)->dict:
     result={"filename":path.name}
     try:
         import librosa
-        y,sr=librosa.load(str(path),sr=None,mono=True,duration=180)
+        import soundfile as sf\n        meta=sf.info(str(path))\n        y,sr=librosa.load(str(path),sr=None,mono=True,duration=180)
         tempo,_=librosa.beat.beat_track(y=y,sr=sr)
         chroma=librosa.feature.chroma_stft(y=y,sr=sr).mean(axis=1)
         notes=["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
-        result.update({"sample_rate":sr,"duration_seconds":round(float(librosa.get_duration(y=y,sr=sr)),2),
+        result.update({"sample_rate":sr,"duration_seconds":round(float(meta.duration),2),
           "estimated_bpm":round(float(tempo),1),"dominant_pitch_class":notes[int(chroma.argmax())]})
     except Exception as exc: result["analysis_note"]=str(exc)[:300]
     return result
@@ -94,3 +94,4 @@ def download(jid:str):
     path=EXPORTS/f"{jid}-stems.zip"
     if not path.is_file(): raise HTTPException(404,"Stems archive is not ready.")
     return FileResponse(path,media_type="application/zip",filename=f"{jid}-stems.zip")
+\n# Mount the static UI after API routes so /api/* is handled by FastAPI endpoints.\napp.mount("/",StaticFiles(directory=ROOT/"web",html=True),name="web")\n
